@@ -1,0 +1,99 @@
+---
+title: "A Rmd example"
+author: "Kelly"
+date: "12 avril 2019"
+output:
+  html_document: 
+    toc: yes #Table des manières (Table of contents)
+    toc_depth: 2 #Profondeur de la toc
+    code_folding: "hide" #Il faut cliquer sur code pour voir le code
+    number_sections: TRUE #Met les numéros de sections tout seul !
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+#Essais perso R Markdown
+
+##Un peu de code
+
+J'essaie de reprendre *quelques* lignes du TP **précédent**.
+
+***
+
+> Réalisé à  ![IMT](C:\Users\Kelly\Desktop\unnamed.png)
+
+```{r test, warning=FALSE, message =FALSE}
+library(ggplot2) #Chargement du pckge
+library(dplyr)
+library(gapminder)
+library(DT)
+
+datatable(gapminder, rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T) )
+```
+
+##Un peu de graphe
+
+Et ça nous donne un **très** beau graphique:
+
+```{r grapheSansCode, echo = FALSE, fig.height=5, fig.width = 7, fig.align='center'}
+gapminder %>%
+  filter(year == "1952") %>%
+  filter(gdpPercap < 90000) %>%
+  ggplot( aes(x=gdpPercap, y = lifeExp, color = continent, size = pop)) + geom_point()
+```
+
+***
+
+#Suite des essais
+
+On va s'intéresser aux prix des AirBNB sur la Côte d'Azur
+
+##Un peu plus de code
+
+```{r plusDeCode, warning=FALSE}
+#Récupération des données de GitHub
+data = read.table("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/1_OneNum.csv", header = TRUE)
+head(data)
+```
+
+##Un peu plus de graphe
+```{r plusDeGraphe, echo =FALSE, fig.align='center', out.width=c('30%', '30%'), fig.show='hold', warning = FALSE, message=FALSE}
+#Tracer un histogramme
+data %>%
+  filter(price <= 1500) %>%
+  ggplot(aes(price)) + geom_histogram() #`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+#Tracer un graphe de densité
+data %>%
+  filter(price < 400) %>%
+  ggplot(aes(price))+geom_density(fill = "red", group = 20)
+```
+
+***
+
+#Un Diagramme interactif !
+
+Et si on représentait l'évolution de la valeur du Bitcoin... **en interactif** !!!
+```{r diagInteractif, echo = FALSE, warning =FALSE, message=FALSE}
+library(dygraphs)
+library(xts)
+data <- read.table("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/3_TwoNumOrdered.csv", header=T)
+data$date <- as.Date(data$date)
+don=xts(x = data$value, order.by = data$date) #On créer un format xts
+dygraph(don)#On trace
+```
+
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
+</style>
+<div class = "blue">
+
+**Conclusion**:<br><br>
+- On aurait du investir ans le Bitcoin !<br>
+- RMarkDown, c'est vraiment trop cool !!
+
+</div>
