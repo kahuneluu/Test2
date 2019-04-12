@@ -21,10 +21,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ##Un peu de code
 
 J'essaie de reprendre *quelques* lignes du TP **précédent**.
+Coucou Je suis pass�e par l�. 
 
 ***
 
-> Réalisé à  ![IMT](C:\Users\Kelly\Desktop\unnamed.png)
+> Réalisé à
 
 ```{r test, warning=FALSE, message =FALSE}
 library(ggplot2) #Chargement du pckge
