@@ -37,13 +37,18 @@ datatable(gapminder, rownames = FALSE, filter="top", options = list(pageLength =
 
 ##Un peu de graphe
 
-Et ça nous donne un **très** beau graphique:
+Et ça nous donne un **très** beau graphique interactif:
 
-```{r grapheSansCode, echo = FALSE, fig.height=5, fig.width = 7, fig.align='center'}
-gapminder %>%
+```{r grapheSansCode, echo = FALSE, fig.height=5, fig.width = 7, fig.align='center', warning = FALSE, message = FALSE}
+library(hrbrthemes) #Pckge de personnalisation
+library(plotly) #Interactif
+#Personnalisation : theme_ipsum, transparence = alpha
+p = gapminder %>%
   filter(year == "1952") %>%
   filter(gdpPercap < 90000) %>%
-  ggplot( aes(x=gdpPercap, y = lifeExp, color = continent, size = pop)) + geom_point()
+  ggplot( aes(x=gdpPercap, y = lifeExp, color = continent, size = pop)) +
+  geom_point(alpha = 0.7, stroke = "white", shpae = 21) + theme_ipsum()
+ggplotly(p);
 ```
 
 ***
@@ -60,7 +65,7 @@ data = read.table("https://raw.githubusercontent.com/holtzy/data_to_viz/master/E
 head(data)
 ```
 
-##Un peu plus de graphe
+##Un peu plus de graphes
 ```{r plusDeGraphe, echo =FALSE, fig.align='center', out.width=c('30%', '30%'), fig.show='hold', warning = FALSE, message=FALSE}
 #Tracer un histogramme
 data %>%
@@ -75,7 +80,7 @@ data %>%
 
 ***
 
-#Un Diagramme interactif !
+#BitCoin !
 
 Et si on représentait l'évolution de la valeur du Bitcoin... **en interactif** !!!
 ```{r diagInteractif, echo = FALSE, warning =FALSE, message=FALSE}
